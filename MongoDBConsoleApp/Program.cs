@@ -31,6 +31,7 @@ namespace MongoDBConsoleApp
                     Console.WriteLine("5 - wyszukaj pacjenta po ID");
                     Console.WriteLine("6 - wyszukaj pacjenta po imieniu i nazwisku");
                     Console.WriteLine("7 - ilość pacjentów");
+                    Console.WriteLine("8 - pacjenci po 50 roku życia");
                     Console.WriteLine("0 - wyjście");
 
                     operation = Convert.ToInt32(Console.ReadLine());
@@ -57,6 +58,9 @@ namespace MongoDBConsoleApp
                             break;
                         case 7:
                             patientService.CountPatients();
+                            break;
+                        case 8:
+                            patientService.ShowPatientsOver50();
                             break;
                         case 0:
                             isRunning = false;

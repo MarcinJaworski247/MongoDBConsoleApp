@@ -16,9 +16,11 @@ namespace MongoDBConsoleApp.Models
         public string FirstName { get; set; }
         [BsonElement("lastName")]
         public string LastName { get; set; }
+        [BsonElement("age")]
+        public int Age { get; set; }
         public void WriteData()
         {
-            Console.WriteLine(Id + " | " + FirstName + " " + LastName);
+            Console.WriteLine(Id + " | " + FirstName + " " + LastName + ", Wiek: " + Age);
         }
     }
 }

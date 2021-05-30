@@ -18,25 +18,36 @@ namespace MongoDBConsoleApp.Services
         public void ShowPatients()
         {
             List<Patient> patients = _patients.Find(x => true).ToList();
-            foreach (var patient in patients)
+            if(patients.Count > 0)
             {
-                patient.WriteData();
+                foreach (var patient in patients)
+                {
+                    patient.WriteData();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Brak pacjentów w bazie danych");
             }
         }
         public void AddPatient()
         {
             string firstName, lastName;
+            int age;
 
             Console.WriteLine("Podaj dane pacjenta");
             Console.WriteLine("Imię");
             firstName = Console.ReadLine();
             Console.WriteLine("Nazwisko");
             lastName = Console.ReadLine();
+            Console.WriteLine("Wiek");
+            age = Convert.ToInt32(Console.ReadLine());
 
             Patient patient = new Patient
             {
                 FirstName = firstName,
-                LastName = lastName
+                LastName = lastName,
+                Age = age
             };
 
             _patients.InsertOne(patient);
@@ -54,15 +65,19 @@ namespace MongoDBConsoleApp.Services
             else
             {
                 string firstName, lastName;
+                int age;
 
                 Console.WriteLine("Podaj nowe dane pacjenta");
                 Console.WriteLine("Imię");
                 firstName = Console.ReadLine();
                 Console.WriteLine("Nazwisko");
                 lastName = Console.ReadLine();
+                Console.WriteLine("Wiek");
+                age = Convert.ToInt32(Console.ReadLine());
 
                 patient.FirstName = firstName;
                 patient.LastName = lastName;
+                patient.Age = age;
 
                 _patients.ReplaceOne(x => x.Id.Equals(patient.Id), patient);
             }
@@ -119,6 +134,21 @@ namespace MongoDBConsoleApp.Services
         {
             long count = _patients.Count(x => true);
             Console.WriteLine("Ilość pacjentów w bazie danych: {0}", count);
+        }
+        public void ShowPatientsOver50()
+        {
+            List<Patient> patients = _patients.Find(x => x.Age > 50).ToList();
+            if(patients.Count > 0)
+            {
+                foreach (var patient in patients)
+                {
+                    patient.WriteData();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Nie znaleziono pacjentów powyżej 50 roku życia");
+            }
         }
     }
 }
